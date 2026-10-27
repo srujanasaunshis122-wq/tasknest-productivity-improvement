@@ -31,7 +31,6 @@ const calculateProductivityScore = (tasks) => {
   const importantPoints = importantCompleted * 25;
   const basePoints = regularPoints + importantPoints;
 
-  // Consistency check: Reward users who maintain a high completion ratio (helps users "stay consistent")
   const totalTasks = tasks.length;
   const completionRate = totalTasks > 0 ? (completedTasks.length / totalTasks) : 0;
   const consistencyBonus = (totalTasks >= 2 && completionRate >= 0.75) ? 15 : 0;

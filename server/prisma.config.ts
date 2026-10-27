@@ -1,18 +1,22 @@
 import "dotenv/config";
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import Database from "better-sqlite3";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dbPath = path.resolve(__dirname, "dev.db");
+const db = new Database(dbPath);
+const adapter = new PrismaBetterSqlite3(db);
 
 export default defineConfig({
-  // The location of your schema file
   schema: "prisma/schema.prisma",
-
-  // Configuration for migrations
   migrations: {
     path: "prisma/migrations",
-    seed: "node prisma/seed.js",
   },
-
-  // The database configuration
+  adapter,
   datasource: {
-    url: env("DATABASE_URL"),
+    url: `file:${dbPath}`,
   },
 });

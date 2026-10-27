@@ -1,5 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../lib/prismaClient');
 const { calculateProductivityScore } = require('../utils/scoreHelper');
 
 const getScore = async (req, res) => {
@@ -7,7 +6,6 @@ const getScore = async (req, res) => {
     const tasks = await prisma.task.findMany();
     const { totalScore, breakdown } = calculateProductivityScore(tasks);
 
-    // Keep database Score model synchronized
     const storedScore = await prisma.score.findFirst();
     if (storedScore) {
       await prisma.score.update({
@@ -15,21 +13,14 @@ const getScore = async (req, res) => {
         data: { value: totalScore }
       });
     } else {
-      await prisma.score.create({
-        data: { value: totalScore }
-      });
+      await prisma.score.create({ data: { value: totalScore } });
     }
 
-    res.json({
-      value: totalScore,
-      breakdown
-    });
+    res.json({ value: totalScore, breakdown });
   } catch (error) {
     console.error('Error fetching score:', error);
     res.status(500).json({ error: 'Failed to fetch score' });
   }
 };
 
-module.exports = {
-  getScore
-};
+module.exports = { getScore };
