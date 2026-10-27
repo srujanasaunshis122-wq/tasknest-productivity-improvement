@@ -62,5 +62,5 @@ To translate the client's vague requirement into a clean, predictable, and motiv
 ---
 
 ## 5. Deployment Links
-- **Frontend Deployment Link:** `https://tasknest-client.vercel.app` (or local preview: `http://localhost:5173`)
-- **Backend Deployment Link:** `https://tasknest-server.onrender.com` (or local preview: `http://localhost:5000`)
+- **Frontend Deployment Link:** `https://tasknest-productivity.vercel.app` (or local preview: `http://localhost:5173`)
+- **Backend Deployment Link:** `https://tasknest-api.onrender.com` (or local preview: `http://localhost:5000`)
